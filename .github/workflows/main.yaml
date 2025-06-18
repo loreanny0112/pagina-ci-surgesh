@@ -1,0 +1,22 @@
+name: Deploy to Surge
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Install Surge
+        run: npm install --global surge
+
+      - name: Deploy to Surge
+        env:
+          SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
+        run: surge ./ https://pagina-ci-loreanny.surge.sh --token $SURGE_TOKEN
